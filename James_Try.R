@@ -3,7 +3,7 @@ library(tidyverse)
 library(dplyr)
 library(ggplot2)
 library(ggpubr)
-
+library(glmnet)
 
 
 ##Mouse 412
@@ -191,4 +191,24 @@ all
 
 ggarrange(c, t, ncol = 2, nrow = 1,
           common.legend = TRUE, legend="bottom")
+
+
+#-----------------------------------------------------------------------------------
+
+#ridge-regression
+
+lambda_values <- 10^seq(2, -2, by = -.1)
+M412_b <- M412_b %>% mutate(ACT =
+                              case_when(V1 == 1 ~ 1, 
+                                        V2 == 1 ~ 2,
+                                        V1 == V2 ~ 3)
+)
+fit_412 <- glmnet(total412[,4:50], total412$ACT, alpha = 0, lambda = lambda_values)
+summary(fit_412)
+
+ridge_412 <- cv.glmnet(as.matrix(total412[,5:51]), total412$ACT, alpha = 0)
+ridge_412$lambda.min
+
+sort(coef(glmnet(total412[,5:51], total412$ACT, alpha = 0, lambda = ridge_412$lambda.min)))
+
 
