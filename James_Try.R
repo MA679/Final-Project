@@ -186,7 +186,7 @@ Mouse_418 <- ggplot(data = value_418)+
 
 all <- ggarrange(Mouse_409,Mouse_412,Mouse_414,Mouse_416,Mouse_417,Mouse_418,
                  ncol = 2, nrow = 3, common.legend = TRUE, legend = "bottom")
-all
+all 
 
 
 ggarrange(c, t, ncol = 2, nrow = 1,
