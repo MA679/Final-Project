@@ -87,5 +87,5 @@ M409_z$avg <- rowMeans(M409_z, na.rm=TRUE)
 M409_z$sum <- rowSums(M409_z, na.rm = TRUE)
 #View(M409_z)
 
-
+#????
 
