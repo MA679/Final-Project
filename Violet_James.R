@@ -38,6 +38,16 @@ Mouse_412 <- ggplot(data = value_412)+
   #geom_line(mapping = aes(x = time, y = avg), col = 'Grey')+
   geom_point(mapping = aes(x = time, y = avg, col = Act, shape = Act),size = 0.5)
 
+table(value_412$Act)
+
+# pie_chart
+info412 <- c(2467,1727,2106)
+names <- c("female","male","no touch")
+colors <- c("pink","lightblue","yellow")
+piepercent412 <- paste(round(100*info412/sum(info412)),"%")
+
+pie412 <- pie(info412, labels = piepercent412, main = "Opp_Sex 412", col = colors)
+
 
 #---------------------------------------------------------------------------
 
@@ -67,6 +77,15 @@ Mouse_417 <- ggplot(data = value_417)+
   #geom_line(mapping = aes(x = time, y = avg), col = 'Grey')+
   geom_point(mapping = aes(x = time, y = avg, col = Act), size = 0.01)
 
+table(value_417$Act)
+
+# pie_chart
+info417 <- c(2615,1779,2464)
+names <- c("female","male","no touch")
+colors <- c("pink","lightblue","yellow")
+piepercent417 <- paste(round(100*info417/sum(info417)),"%")
+
+pie417 <- pie(info417, labels = piepercent417, main = "Opp_Sex 417", col = colors)
 
 
 #---------------------------------------------------------------------------------------
@@ -97,6 +116,16 @@ Mouse_416 <- ggplot(data = value_416)+
   #geom_line(mapping = aes(x = time, y = avg), col = 'Grey')+
   geom_point(mapping = aes(x = time, y = avg, col = Act), size = 0.01)
 
+table(value_416$Act)
+
+# pie_chart
+info416 <- c(2370,1334,2597)
+names <- c("female","male","no touch")
+colors <- c("pink","lightblue","yellow")
+piepercent416 <- paste(round(100*info416/sum(info416)),"%")
+
+pie416 <- pie(info416, labels = piepercent416, main = "Opp_Sex 416", col = colors)
+
 #-----------------------------------------------------------------------------------------
 
 ##Mouse 409
@@ -125,6 +154,18 @@ Mouse_409 <- ggplot(data = value_409)+
   #geom_line(mapping = aes(x = time, y = avg), col = 'Grey')+
   geom_point(mapping = aes(x = time, y = avg, col = Act), size = 0.01)
 
+
+table(value_409$Act)
+
+# pie_chart
+info409 <- c(1329,2110,2862)
+names <- c("female","male","no touch")
+colors <- c("pink","lightblue","yellow")
+piepercent409 <- paste(round(100*info409/sum(info409)),"%")
+
+pie409 <- pie(info409, labels = piepercent409, main = "Opp_Sex 409", col = colors)
+
+
 #------------------------------------------------------------------------------------------------
 ##Mouse 414
 Mouse_414_behavior=readMat("Data/Opp_Sex/608102_414/Day_2/Trial_002_0/binned_behavior.mat")
@@ -151,6 +192,17 @@ value_414$time <- c(1:6301)
 Mouse_414 <- ggplot(data = value_414)+
   #geom_line(mapping = aes(x = time, y = avg), col = 'Grey')+
   geom_point(mapping = aes(x = time, y = avg, col = Act), size = 0.01)
+
+table(value_414$Act)
+
+# pie_chart
+info414 <- c(1834,3104,1363)
+names <- c("female","male","no touch")
+colors <- c("pink","lightblue","yellow")
+piepercent414 <- paste(round(100*info414/sum(info414)),"%")
+
+pie414 <- pie(info414, labels = piepercent414, main = "Opp_Sex 414", col = colors)
+
 
 #---------------------------------------------------------------------------------------
 
@@ -180,15 +232,33 @@ Mouse_418 <- ggplot(data = value_418)+
   #geom_line(mapping = aes(x = time, y = avg), col = 'Grey')+
   geom_point(mapping = aes(x = time, y = avg, col = Act), size = 0.01)
 
+table(value_418$Act)
+
+# pie_chart
+info418 <- c(2249,1801,2251)
+names <- c("female","male","no touch")
+colors <- c("pink","lightblue","yellow")
+piepercent418 <- paste(round(100*info418/sum(info418)),"%")
+
+pie418 <- pie(info418, labels = piepercent418, main = "Opp_Sex 418", col = colors)
+legend("topright",names, cex = 0.8, fill = colors)
+
 #-----------------------------------------------------------------------------------------
 
 #all the graphs: mouse(409, 412, 414, 416, 417, 418)
 
-all <- ggarrange(Mouse_409,Mouse_412,Mouse_414,Mouse_416,Mouse_417,Mouse_418,
+all_point <- ggarrange(Mouse_409,Mouse_412,Mouse_414,Mouse_416,Mouse_417,Mouse_418,
                  ncol = 2, nrow = 3, common.legend = TRUE, legend = "bottom")
-all 
+all_point
+ 
+par(mfrow = c(2,3))
+pie(info409, labels = piepercent409, main = "Opp_Sex 409", col = colors)
+pie(info412, labels = piepercent412, main = "Opp_Sex 412", col = colors)
+pie(info414, labels = piepercent414, main = "Opp_Sex 414", col = colors)
+pie(info416, labels = piepercent416, main = "Opp_Sex 416", col = colors)
+pie(info417, labels = piepercent417, main = "Opp_Sex 417", col = colors)
+legend(-2.5,-1,names, cex = 0.8, fill = colors,horiz=T,box.lty = 0, xpd=T)
+pie(info418, labels = piepercent418, main = "Opp_Sex 418", col = colors)
 
 
-ggarrange(c, t, ncol = 2, nrow = 1,
-          common.legend = TRUE, legend="bottom")
 
