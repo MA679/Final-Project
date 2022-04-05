@@ -250,7 +250,7 @@ legend("topright",names, cex = 0.8, fill = colors)
 all_point <- ggarrange(Mouse_409,Mouse_412,Mouse_414,Mouse_416,Mouse_417,Mouse_418,
                  ncol = 2, nrow = 3, common.legend = TRUE, legend = "bottom")
 all_point
- 
+  
 par(mfrow = c(2,3))
 pie(info409, labels = piepercent409, main = "Opp_Sex 409", col = colors)
 pie(info412, labels = piepercent412, main = "Opp_Sex 412", col = colors)
