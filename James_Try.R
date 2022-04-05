@@ -71,7 +71,21 @@ M416_z$avg <- rowMeans(M416_z, na.rm=TRUE)
 M416_z$sum <- rowSums(M416_z, na.rm = TRUE)
 #View(M416_z)
 
+##Mouse 409
+Mouse_409_behavior=readMat("Data/Opp_Sex/608034_409/Day_1/Trial_002_0/binned_behavior.mat")
+M409_b <- as.data.frame(t(Mouse_409_behavior$binned.behavior))
+M409_b <- M409_b %>% mutate(Act =
+                              case_when(V1 == 1 ~ "male", 
+                                        V2 == 1 ~ "female",
+                                        V1 == V2 ~ "no touch")
+)
+#View(M409_b)
 
+Mouse_409_zscore=readMat("Data/Opp_Sex/608034_409/Day_1/Trial_002_0/binned_zscore.mat")
+M409_z <- as.data.frame(Mouse_409_zscore$binned.zscore)
+M409_z$avg <- rowMeans(M409_z, na.rm=TRUE)
+M409_z$sum <- rowSums(M409_z, na.rm = TRUE)
+#View(M409_z)
 
 
 
