@@ -2,6 +2,7 @@ library(R.matlab)
 library(tidyverse)
 library(dplyr)
 library(ggplot2)
+library(ggpubr)
 
 
 
@@ -33,7 +34,7 @@ ggplot(data = value_412)+
   geom_point(mapping = aes(x = time, y = V1), size = 0.01)+
   geom_point(mapping = aes(x = time, y = V2), col = 'Blue', size = 0.01)
 
-Mouse412 <- ggplot(data = value_412)+
+Mouse_412 <- ggplot(data = value_412)+
   #geom_line(mapping = aes(x = time, y = avg), col = 'Grey')+
   geom_point(mapping = aes(x = time, y = avg, col = Act, shape = Act),size = 0.5)
   
@@ -92,7 +93,7 @@ value_416$time <- c(1:6301)
 #View(value_416)
 
 #Time Series for 416
-Movie_416 <- ggplot(data = value_416)+
+Mouse_416 <- ggplot(data = value_416)+
   #geom_line(mapping = aes(x = time, y = avg), col = 'Grey')+
   geom_point(mapping = aes(x = time, y = avg, col = Act), size = 0.01)
 
@@ -122,7 +123,7 @@ value_409$time <- c(1:6301)
 #Time Series for 409
 Mouse_409 <- ggplot(data = value_409)+
   #geom_line(mapping = aes(x = time, y = avg), col = 'Grey')+
-  geom_point(mapping = aes(x = time, y = sum, col = Act), size = 0.01)
+  geom_point(mapping = aes(x = time, y = avg, col = Act), size = 0.01)
 
 #------------------------------------------------------------------------------------------------
 ##Mouse 414
@@ -149,7 +150,7 @@ value_414$time <- c(1:6301)
 #Time Series for 414
 Mouse_414 <- ggplot(data = value_414)+
   #geom_line(mapping = aes(x = time, y = avg), col = 'Grey')+
-  geom_point(mapping = aes(x = time, y = sum, col = Act), size = 0.01)
+  geom_point(mapping = aes(x = time, y = avg, col = Act), size = 0.01)
 
 #---------------------------------------------------------------------------------------
 
@@ -177,13 +178,17 @@ value_418$time <- c(1:6301)
 #Time Series for 418
 Mouse_418 <- ggplot(data = value_418)+
   #geom_line(mapping = aes(x = time, y = avg), col = 'Grey')+
-  geom_point(mapping = aes(x = time, y = sum, col = Act), size = 0.01)
+  geom_point(mapping = aes(x = time, y = avg, col = Act), size = 0.01)
 
 #-----------------------------------------------------------------------------------------
 
 #all the graphs: mouse(409, 412, 414, 416, 417, 418)
 
+all <- ggarrange(Mouse_409,Mouse_412,Mouse_414,Mouse_416,Mouse_417,Mouse_418,
+                 ncol = 2, nrow = 3, common.legend = TRUE, legend = "bottom")
+all
 
 
-
+ggarrange(c, t, ncol = 2, nrow = 1,
+          common.legend = TRUE, legend="bottom")
 
