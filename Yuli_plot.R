@@ -3,10 +3,7 @@ library(R.matlab)
 library(fastICA)
 library(zoo)
 
-tmp=readMat("data/binned_zscore.mat")
-file<-list.files(paste0(getwd(),'/data'))
-tmp$binned.zscore %>% dim()
-tmp$binned.zscore %>% view()
+
 
 tmp_behavior=readMat("data/Opp_Sex/608102_412/Day_1/Trial_002_0/binned_behavior.mat")$binned.behavior
 tmp_zscore=readMat("data/Opp_Sex/608102_412/Day_1/Trial_002_0/binned_zscore.mat")$binned.zscore
@@ -27,11 +24,29 @@ df_new %>% ggplot() + geom_line(aes(x=Time,y=X2),col='red') +geom_point(aes(x=Ti
 
 #rollapply(df_new, width=63, function(x) cor(x[,1],x[,3]), by.column=FALSE)
 
-
 df_new %>% mutate(behavior=as.factor(paste0(as.character(B1),as.character(B2)))) %>% ggplot()+
   geom_boxplot(aes(x=behavior,y=X1),outlier.shape = NA)+
   coord_cartesian(ylim = c(-2, 2))+
   scale_x_discrete(labels = c("no touch", "female","male"))
+
+
+get_box<-function(tmp_behavior,tmp_zscore){
+  behavior<-tmp_behavior
+  zscore<-tmp_zscore
+  set.seed(1)
+  re=fastICA(zscore, 2)
+  df_new<-cbind(re$S,t(behavior)) %>% data.frame()
+  rownames(df_new) <- NULL
+  colnames(df_new)<-c('X1','X2','B1','B2')
+  p<-df_new %>% mutate(behavior=as.factor(paste0(as.character(B1),as.character(B2)))) %>% ggplot()+
+    geom_boxplot(aes(x=behavior,y=X1),outlier.shape = NA)+
+    scale_x_discrete(labels = c("no touch", "female","male"))
+  return(p)
+}
+
+#coord_cartesian(ylim = c(quantile(df_new$X1,0.01), quantile(df_new$X1,0.99)))+
+
+get_box(tmp_behavior,tmp_zscore)
 
 
 # 
