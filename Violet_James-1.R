@@ -470,7 +470,39 @@ p_nt
 ggsave("average_nt.png")
 
 
+#------------------------------------------------------------------------------
+p409 <- ggplot(data = value_409)+
+  geom_point(mapping = aes(x = time, y = avg), size = 0.3)+
+  facet_wrap(~Act)+
+  labs(title = "Opp_sex 409")
+ 
+  
 
+p412 <- ggplot(data = value_412)+
+  geom_point(mapping = aes(x = time, y = avg), size = 0.3)+
+  facet_wrap(~Act)+
+  labs(title = "Opp_sex 412")
 
+p414 <- ggplot(data = value_414)+
+  geom_point(mapping = aes(x = time, y = avg), size = 0.3)+
+  facet_wrap(~Act)+
+  labs(title = "Opp_sex 414")
 
+p416 <- ggplot(data = value_416)+
+  geom_point(mapping = aes(x = time, y = avg), size = 0.3)+
+  facet_wrap(~Act)+
+  labs(title = "Opp_sex 416")
 
+p417 <- ggplot(data = value_417)+
+  geom_point(mapping = aes(x = time, y = avg), size = 0.3)+
+  facet_wrap(~Act)+
+  labs(title = "Opp_sex 417")
+
+p418 <- ggplot(data = value_418)+
+  geom_point(mapping = aes(x = time, y = avg), size = 0.3)+
+  facet_wrap(~Act)+
+  labs(title = "Opp_sex 418")
+
+p_male_female <- ggarrange(p409,p412,p414,p416,p417,p418, ncol = 1, nrow = 6, legend = "bottom")
+
+ggsave("p_male_female.png")
