@@ -82,7 +82,7 @@ p417 <- ggplot(data = value_417)+
   geom_point(mapping = aes(x = time, y = avg, col = Act), size = 0.01)+
   labs(title = "Opp_sex 417: Average score of cells vs Time in behavior")+
   theme(plot.title = element_text(hjust = 0.5))
-Mouse_417 <- Mouse_417 + scale_y_continuous(limits = c(0.0,2.0))
+Mouse_417 <- p417 + scale_y_continuous(limits = c(0.0,2.0))
 
 
 table(value_417$Act)
@@ -210,6 +210,8 @@ p414 <- ggplot(data = value_414)+
   theme(plot.title = element_text(hjust = 0.5))
 Mouse_414 <- p414 + scale_y_continuous(limits = c(0.0,2.0))
 
+ggsave('Opp_sex414_average_time_sex.png', Mouse_414, height = 6, width = 10)
+
 table(value_414$Act)
 
 # pie_chart
@@ -268,10 +270,10 @@ legend("topright",names, cex = 0.8, fill = colors)
 #all the graphs: mouse(409, 412, 414, 416, 417, 418)
 
 all_point <- ggarrange(Mouse_409,Mouse_412,Mouse_414,Mouse_416,Mouse_417,Mouse_418,
-                 ncol = 2, nrow = 3, common.legend = TRUE, legend = "bottom")
+                 ncol = 1, nrow = 6, common.legend = TRUE, legend = "bottom")
 all_point
 
-ggsave('average&time:sex.png', all_point, height = 6, width = 10)
+ggsave('average_time_sex.png', all_point, height = 6, width = 10)
  
 par(mfrow = c(2,3))
 pie(info409, labels = piepercent409, main = "Opp_Sex 409", col = colors)
@@ -281,6 +283,194 @@ pie(info416, labels = piepercent416, main = "Opp_Sex 416", col = colors)
 pie(info417, labels = piepercent417, main = "Opp_Sex 417", col = colors)
 legend(-2.5,-1,names, cex = 0.8, fill = colors,horiz=T,box.lty = 0, xpd=T)
 pie(info418, labels = piepercent418, main = "Opp_Sex 418", col = colors)
+
+
+#----------------------------------------------------------------------------
+
+# Preliminary Analysis
+## separate male, female and no touch.
+### male
+value_409_male <- filter(value_409, Act == "male")
+p_409_male <- ggplot(data = value_409_male) + geom_point(mapping = aes(x = time, y = avg), color = "lightblue",size = 0.01)+
+  labs(title = "Opp_sex 409: Average score of cells vs Time in male")+
+  theme(plot.title = element_text(hjust = 0.5))
+
+p_409_male_y <- p_409_male + scale_y_continuous(limits = c(0.0,2.0))
+
+
+##
+
+value_412_male <- filter(value_412, Act == "male")
+p_412_male <- ggplot(data = value_412_male) + geom_point(mapping = aes(x = time, y = avg), color = "lightblue",size = 0.01)+
+  labs(title = "Opp_sex 416: Average score of cells vs Time in male")+
+  theme(plot.title = element_text(hjust = 0.5))
+
+p_412_male_y <- p_412_male + scale_y_continuous(limits = c(0.0,2.0))
+
+
+##
+value_414_male <- filter(value_414, Act == "male")
+p_414_male <- ggplot(data = value_414_male) + geom_point(mapping = aes(x = time, y = avg), color = "lightblue",size = 0.01)+
+  labs(title = "Opp_sex 414: Average score of cells vs Time in male ")+
+  theme(plot.title = element_text(hjust = 0.5))
+
+p_414_male_y <- p_414_male + scale_y_continuous(limits = c(0.0,2.0))
+
+
+
+##
+value_416_male <- filter(value_416, Act == "male")
+p_416_male <- ggplot(data = value_416_male) + geom_point(mapping = aes(x = time, y = avg), color = "lightblue",size = 0.01)+
+  labs(title = "Opp_sex 416: Average score of cells vs Time in male")+
+  theme(plot.title = element_text(hjust = 0.5))
+
+p_416_male_y <- p_416_male + scale_y_continuous(limits = c(0.0,2.0))
+
+
+##
+value_417_male <- filter(value_417, Act == "male")
+p_417_male <- ggplot(data = value_417_male) + geom_point(mapping = aes(x = time, y = avg), color = "lightblue",size = 0.01)+
+  labs(title = "Opp_sex 417: Average score of cells vs Time in male")+
+  theme(plot.title = element_text(hjust = 0.5))
+
+p_417_male_y <- p_417_male + scale_y_continuous(limits = c(0.0,2.0))
+
+
+## 
+value_418_male <- filter(value_416, Act == "male")
+p_418_male <- ggplot(data = value_418_male) + geom_point(mapping = aes(x = time, y = avg), color = "lightblue",size = 0.01)+
+  labs(title = "Opp_sex 418: Average score of cells vs Time in male")+
+  theme(plot.title = element_text(hjust = 0.5))
+
+p_418_male_y <- p_418_male + scale_y_continuous(limits = c(0.0,2.0))
+
+
+p_male <- ggarrange(p_409_male_y,p_412_male_y,p_414_male_y,p_416_male_y,p_417_male_y,p_418_male_y,
+                    ncol = 1, nrow = 6, legend = "bottom")
+p_male
+
+ggsave("average_male.png")
+
+
+### female
+value_409_female <- filter(value_409, Act == "female")
+p_409_female <- ggplot(data = value_409_female) + geom_point(mapping = aes(x = time, y = avg), color = "pink",size = 0.01)+
+  labs(title = "Opp_sex 409: Average score of cells vs Time in female")+
+  theme(plot.title = element_text(hjust = 0.5))
+
+p_409_female_y <- p_409_female + scale_y_continuous(limits = c(0.0,2.0))
+
+
+##
+value_412_female <- filter(value_412, Act == "female")
+p_412_female <- ggplot(data = value_412_female) + geom_point(mapping = aes(x = time, y = avg), color = "pink",size = 0.01)+
+  labs(title = "Opp_sex 412: Average score of cells vs Time in female")+
+  theme(plot.title = element_text(hjust = 0.5))
+
+p_412_female_y <- p_412_female + scale_y_continuous(limits = c(0.0,2.0))
+
+
+##
+value_414_female <- filter(value_414, Act == "female")
+p_414_female <- ggplot(data = value_414_female) + geom_point(mapping = aes(x = time, y = avg), color = "pink",size = 0.01)+
+  labs(title = "Opp_sex 414: Average score of cells vs Time in female")+
+  theme(plot.title = element_text(hjust = 0.5))
+
+p_414_female_y <- p_414_female + scale_y_continuous(limits = c(0.0,2.0))
+
+
+##
+value_416_female <- filter(value_416, Act == "female")
+p_416_female <- ggplot(data = value_416_female) + geom_point(mapping = aes(x = time, y = avg), color = "pink",size = 0.01)+
+  labs(title = "Opp_sex 416: Average score of cells vs Time in female")+
+  theme(plot.title = element_text(hjust = 0.5))
+
+p_416_female_y <- p_416_female + scale_y_continuous(limits = c(0.0,2.0))
+
+
+##
+value_417_female <- filter(value_417, Act == "female")
+p_417_female <- ggplot(data = value_417_female) + geom_point(mapping = aes(x = time, y = avg), color = "pink",size = 0.01)+
+  labs(title = "Opp_sex 417: Average score of cells vs Time in female")+
+  theme(plot.title = element_text(hjust = 0.5))
+
+p_417_female_y <- p_417_female + scale_y_continuous(limits = c(0.0,2.0))
+
+
+##
+value_418_female <- filter(value_418, Act == "female")
+p_418_female <- ggplot(data = value_418_female) + geom_point(mapping = aes(x = time, y = avg), color = "pink",size = 0.01)+
+  labs(title = "Opp_sex 418: Average score of cells vs Time in female")+
+  theme(plot.title = element_text(hjust = 0.5))
+
+p_418_female_y <- p_418_female + scale_y_continuous(limits = c(0.0,2.0))
+
+
+p_female <- ggarrange(p_409_female_y,p_412_female_y,p_414_female_y,p_416_female_y,p_417_female_y,p_418_female_y,
+                      ncol = 1, nrow = 6, legend = "bottom")
+p_female
+
+ggsave("average_female.png")
+
+
+### no touch
+value_409_nt <- filter(value_409, Act == "no touch")
+p_409_nt <- ggplot(data = value_409_nt) + geom_point(mapping = aes(x = time, y = avg), color = "purple",size = 0.01)+
+  labs(title = "Opp_sex 409: Average score of cells vs Time without touch")+
+  theme(plot.title = element_text(hjust = 0.5))
+
+p_409_nt_y <- p_409_nt + scale_y_continuous(limits = c(0.0,2.0))
+
+##
+value_412_nt <- filter(value_412, Act == "no touch")
+p_412_nt <- ggplot(data = value_412_nt) + geom_point(mapping = aes(x = time, y = avg), color = "purple",size = 0.01)+
+  labs(title = "Opp_sex 412: Average score of cells vs Time without touch")+
+  theme(plot.title = element_text(hjust = 0.5))
+
+p_412_nt_y <- p_412_nt + scale_y_continuous(limits = c(0.0,2.0))
+
+
+##
+value_414_nt <- filter(value_414, Act == "no touch")
+p_414_nt <- ggplot(data = value_414_nt) + geom_point(mapping = aes(x = time, y = avg), color = "purple",size = 0.01)+
+  labs(title = "Opp_sex 414: Average score of cells vs Time without touch")+
+  theme(plot.title = element_text(hjust = 0.5))
+
+p_414_nt_y <- p_414_nt + scale_y_continuous(limits = c(0.0,2.0))
+
+
+##
+value_416_nt <- filter(value_416, Act == "no touch")
+p_416_nt <- ggplot(data = value_416_nt) + geom_point(mapping = aes(x = time, y = avg), color = "purple",size = 0.01)+
+  labs(title = "Opp_sex 416: Average score of cells vs Time without touch")+
+  theme(plot.title = element_text(hjust = 0.5))
+
+p_416_nt_y <- p_416_nt + scale_y_continuous(limits = c(0.0,2.0))
+
+##
+value_417_nt <- filter(value_417, Act == "no touch")
+p_417_nt <- ggplot(data = value_417_nt) + geom_point(mapping = aes(x = time, y = avg), color = "purple",size = 0.01)+
+  labs(title = "Opp_sex 417: Average score of cells vs Time without touch")+
+  theme(plot.title = element_text(hjust = 0.5))
+
+p_417_nt_y <- p_417_nt + scale_y_continuous(limits = c(0.0,2.0))
+
+##
+value_418_nt <- filter(value_418, Act == "no touch")
+p_418_nt <- ggplot(data = value_418_nt) + geom_point(mapping = aes(x = time, y = avg), color = "purple",size = 0.01)+
+  labs(title = "Opp_sex 418: Average score of cells vs Time without touch")+
+  theme(plot.title = element_text(hjust = 0.5))
+
+p_418_nt_y <- p_418_nt + scale_y_continuous(limits = c(0.0,2.0))
+
+p_nt <- ggarrange(p_409_nt_y,p_412_nt_y,p_414_nt_y,p_416_nt_y,p_417_nt_y,p_418_nt_y,
+                              ncol = 1, nrow = 6, legend = "bottom")
+p_nt
+
+ggsave("average_nt.png")
+
+
+
 
 
 
