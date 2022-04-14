@@ -75,9 +75,9 @@ Mouse_417 <- ggplot(data = value_417)+
 Mouse_416_behavior=readMat("Data/Opp_Sex/608103_416/Day_2/Trial_002_0/binned_behavior.mat")
 M416_b <- as.data.frame(t(Mouse_416_behavior$binned.behavior))
 M416_b <- M416_b %>% mutate(Act =
-                              case_when(V1 == 1 ~ "male", 
-                                        V2 == 1 ~ "female",
-                                        V1 == V2 ~ "no touch")
+                              case_when(V1 == 1 ~ 1, 
+                                        V2 == 1 ~ 2,
+                                        V1 == V2 ~ 3)
 )
 #View(M416_b)
 
@@ -210,5 +210,20 @@ ridge_412 <- cv.glmnet(as.matrix(total412[,5:51]), total412$ACT, alpha = 0)
 ridge_412$lambda.min
 
 sort(coef(glmnet(total412[,5:51], total412$ACT, alpha = 0, lambda = ridge_412$lambda.min)))
+
+#-------------------------------------------------------------------------------
+
+library(foreign)
+library(nnet)
+library(reshape2)
+
+
+fit416 <- multinom(Act ~ avg, data = value_416)
+fit417 <- multinom(Act ~ avg, data = value_417)
+
+
+
+
+
 
 
