@@ -506,3 +506,99 @@ p418 <- ggplot(data = value_418)+
 p_male_female <- ggarrange(p409,p412,p414,p416,p417,p418, ncol = 1, nrow = 6, legend = "bottom")
 
 ggsave("p_male_female.png")
+
+#------------------------------------------------------------------------------
+source("James_Try.R")
+##Preliminary Analysis
+library(foreign)
+library(nnet)
+library(reshape2)
+
+fit416_log_m <- glm(V1 ~ avg, data = value_416_a, family = 'binomial')
+fit416_log_f <- glm(V2 ~ avg, data = value_416_a, family = 'binomial')
+#View(value_416_a)
+
+#Visualization of mouse 416 for V1
+summary(fit416_log_m)
+summary(fit416_log_m)$coefficients
+exp(coefficients(fit416_log_m)[2])
+
+predict(fit416_log_m, newdata = list(avg = c(0.01, 1, 5)), type = "response")
+
+avgs = seq(min(value_416_a$avg), max(value_416_a$avg), 0.05)
+probs = predict(fit416_log_m, 
+                newdata = data.frame(avg = avgs), 
+                type = "response", 
+                se.fit = TRUE)
+
+pm = probs$fit
+pu = probs$fit + probs$se.fit * 1.96 # 95% confidence interval
+pl = probs$fit - probs$se.fit * 1.96 # 95% confidence interval
+
+plot(value_416_a$avg, 
+     value_416_a$V1, 
+     pch = 16, 
+     cex = 1, 
+     ylab = "Interact with male", 
+     xlab = "Avg z.score")
+
+grid()
+
+polygon(c(rev(avgs),avgs), c(rev(pl),pu),
+        col = "grey90", border = NA)
+
+lines(avgs, pm, lwd = 2)
+lines(avgs, pu, lwd = 2, col = "red")
+lines(avgs, pl, lwd = 2, col = "red")
+
+abline(h=0.1, lty=2)
+abline(h=0.5, lty=2)
+abline(h=0.9, lty=2)
+
+#Visualization of mouse 416 for V2
+
+summary(fit416_log_f)
+summary(fit416_log_f)$coefficients
+exp(coefficients(fit416_log_f)[2])
+
+predict(fit416_log_f, newdata = list(avg = c(-1, 0.05, 5)), type = "response")
+
+avgs_f = seq(min(value_416_a$avg), max(value_416_a$avg), 0.05)
+probs_f = predict(fit416_log_f, 
+                  newdata = data.frame(avg = avgs_f), 
+                  type = "response", 
+                  se.fit = TRUE)
+
+pm_f = probs_f$fit
+pu_f = probs_f$fit + probs$se.fit * 1.96 # 95% confidence interval
+pl_f = probs_f$fit - probs$se.fit * 1.96 # 95% confidence interval
+
+plot(value_416_a$avg, 
+     value_416_a$V2, 
+     pch = 10, 
+     cex = 0.5, 
+     ylab = "Interact with female", 
+     xlab = "Avg z.score",
+     main = "The probability of the Mouse416 interact result ")
+
+grid()
+
+polygon(c(rev(avgs_f),avgs_f), c(rev(pl_f),pu_f),
+        col = "grey90", border = NA)
+
+lines(avgs, pm, lwd = 2, col = "black")
+lines(avgs, pu, lwd = 2, col = "lightblue")
+lines(avgs, pl, lwd = 2, col = "lightblue")
+
+lines(avgs, pm_f, lwd = 2)
+lines(avgs, pu_f, lwd = 2, col = "pink")
+lines(avgs, pl_f, lwd = 2, col = "pink")
+
+legend("topright", legend = c("male","female"), col = c("lightblue","pink"),border = "grey",
+       lty = 2, lwd = 2, bty = "n",box.lty = 1, box.lwd = 1,cex = 1,text.font = 2 )
+# abline(h=0.1, lty=2)
+# abline(h=0.5, lty=2)
+# abline(h=0.9, lty=2)
+
+
+
