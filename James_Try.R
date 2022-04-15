@@ -387,7 +387,6 @@ abline(h=0.9, lty=2)
 #-------------------------------------------------------------------------------
 library(RcppRoll)
 
-
 #Sum every ten rows
 value_414_b <- value_414_a[,1:3]
 sum_rows_414 <- value_414_b %>% 
@@ -400,6 +399,14 @@ roll_sum_414 <- value_414_b %>%
   mutate(roll_sum = roll_sum(avg, 10, align = "right", fill = NA))   
 
 #View(roll_sum_414)
+
+fit_414_roll_sum_m <- glm(V1 ~ roll_sum, data = roll_sum_414, family = 'binomial')
+fit_414_roll_sum_f <- glm(V2 ~ roll_sum, data = roll_sum_414, family = 'binomial')
+
+summary(fit_414_roll_sum_m)
+
+
+
 
 
 
