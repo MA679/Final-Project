@@ -380,10 +380,6 @@ lines(avgs_414f, pm_414f, lwd = 2)
 lines(avgs_414f, pu_414f, lwd = 2, col = "red")
 lines(avgs_414f, pl_414f, lwd = 2, col = "red")
 
-abline(h=0.1, lty=2)
-abline(h=0.5, lty=2)
-abline(h=0.9, lty=2)
-
 #-------------------------------------------------------------------------------
 library(RcppRoll)
 
@@ -405,9 +401,50 @@ fit_414_roll_sum_f <- glm(V2 ~ roll_sum, data = roll_sum_414, family = 'binomial
 
 summary(fit_414_roll_sum_m)
 
+predict(fit_414_roll_sum_m, newdata = list(roll_sum = c(3, 5, 10)), type = "response")
 
+#for male
+avgs_roll414_m = seq(min(roll_sum_414[-c(1:10),]$roll_sum), max(roll_sum_414[-c(1:10),]$roll_sum), 0.1)
+probs_roll414_m = predict(fit_414_roll_sum_m, 
+                     newdata = data.frame(roll_sum = avgs_roll414_m), 
+                     type = "response", 
+                     se.fit = TRUE)
 
+pm_roll_414_m = probs_roll414_m$fit
+pu_roll_414_m = probs_roll414_m$fit + probs_roll414_m$se.fit * 1.96 # 95% confidence interval
+pl_roll_414_m = probs_roll414_m$fit - probs_roll414_m$se.fit * 1.96 # 95% confidence interval
 
+#for female
+avgs_roll414_f = seq(min(roll_sum_414[-c(1:10),]$roll_sum), max(roll_sum_414[-c(1:10),]$roll_sum), 0.1)
+probs_roll414_f = predict(fit_414_roll_sum_f, 
+                          newdata = data.frame(roll_sum = avgs_roll414_f), 
+                          type = "response", 
+                          se.fit = TRUE)
+
+pm_roll_414_f = probs_roll414_f$fit
+pu_roll_414_f = probs_roll414_f$fit + probs_roll414_f$se.fit * 1.96 # 95% confidence interval
+pl_roll_414_f = probs_roll414_f$fit - probs_roll414_f$se.fit * 1.96 # 95% confidence interval
+
+#plot
+plot(roll_sum_414[-c(1:10),]$roll_sum, 
+     roll_sum_414[-c(1:10),]$V2, 
+     pch = 16, 
+     cex = 1, 
+     ylab = "Interact with female", 
+     xlab = "Roll_sum Avg z.score")
+
+grid()
+
+polygon(c(rev(avgs_roll414_m),avgs_roll414_m), c(rev(pl_roll_414_m),pu_roll_414_m),
+        col = "grey90", border = NA)
+
+lines(avgs_roll414_m, pm_roll_414_m, lwd = 2)
+lines(avgs_roll414_m, pu_roll_414_m, lwd = 2, col = "blue")
+lines(avgs_roll414_m, pl_roll_414_m, lwd = 2, col = "blue")
+
+lines(avgs_roll414_f, pm_roll_414_f, lwd = 2)
+lines(avgs_roll414_f, pu_roll_414_f, lwd = 2, col = "red")
+lines(avgs_roll414_f, pl_roll_414_f, lwd = 2, col = "red")
 
 
 
