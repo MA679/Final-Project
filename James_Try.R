@@ -281,27 +281,33 @@ pl_f = probs_f$fit - probs$se.fit * 1.96 # 95% confidence interval
 
 plot(value_416_a$avg, 
      value_416_a$V2, 
-     pch = 16, 
-     cex = 1, 
-     ylab = "Interact with female", 
-     xlab = "Avg z.score")
+     pch = 10, 
+     cex = 0.5, 
+     ylab = "Interact with male | female ", 
+     xlab = "Avg z.score",
+     main = "The probability of the Mouse416 interact result ")
 
 grid()
 
+polygon(c(rev(avgs),avgs), c(rev(pl),pu),
+        col = "grey90", border = NA)
 polygon(c(rev(avgs_f),avgs_f), c(rev(pl_f),pu_f),
         col = "grey90", border = NA)
 
 lines(avgs, pm, lwd = 2, col = "black")
-lines(avgs, pu, lwd = 2, col = "blue")
-lines(avgs, pl, lwd = 2, col = "blue")
+lines(avgs, pu, lwd = 2, col = "lightblue")
+lines(avgs, pl, lwd = 2, col = "lightblue")
 
 lines(avgs, pm_f, lwd = 2)
-lines(avgs, pu_f, lwd = 2, col = "red")
-lines(avgs, pl_f, lwd = 2, col = "red")
+lines(avgs, pu_f, lwd = 2, col = "pink")
+lines(avgs, pl_f, lwd = 2, col = "pink")
 
-abline(h=0.1, lty=2)
-abline(h=0.5, lty=2)
-abline(h=0.9, lty=2)
+legend("topright", legend = c("male","female"), col = c("lightblue","pink"),border = "grey",
+       lty = 2, lwd = 2, bty = "n",box.lty = 1, box.lwd = 1,cex = 1,text.font = 2 )
+
+# abline(h=0.1, lty=2)
+# abline(h=0.5, lty=2)
+# abline(h=0.9, lty=2)
 
 #------------------------------------------------------------------------------
 #Visualize for mouse 414
@@ -319,33 +325,33 @@ exp(coefficients(fit414_log_m)[2])
 
 predict(fit414_log_m, newdata = list(avg = c(0.01, 1, 5)), type = "response")
 
-avgs_414 = seq(min(value_414_a$avg), max(value_414_a$avg), 0.05)
-probs_414 = predict(fit414_log_m, 
-                newdata = data.frame(avg = avgs_414), 
+avgs_414m = seq(min(value_414_a$avg), max(value_414_a$avg), 0.05)
+probs_414m = predict(fit414_log_m, 
+                newdata = data.frame(avg = avgs_414m), 
                 type = "response", 
                 se.fit = TRUE)
 
-pm_414m = probs_414$fit
-pu_414m = probs_414$fit + probs_414$se.fit * 1.96 # 95% confidence interval
-pl_414m = probs_414$fit - probs_414$se.fit * 1.96 # 95% confidence interval
+pm_414m = probs_414m$fit
+pu_414m = probs_414m$fit + probs_414m$se.fit * 1.96 # 95% confidence interval
+pl_414m = probs_414m$fit - probs_414m$se.fit * 1.96 # 95% confidence interval
 
-plot(value_414_a$avg, 
-     value_414_a$V1, 
-     pch = 16, 
-     cex = 1, 
-     ylab = "Interact with male", 
-     xlab = "Avg z.score")
+# plot(value_414_a$avg, 
+#      value_414_a$V1, 
+#      pch = 16, 
+#      cex = 1, 
+#      ylab = "Interact with male", 
+#      xlab = "Avg z.score")
+# 
+# grid()
+# 
+# polygon(c(rev(avgs_414),avgs_414), c(rev(pl_414m),pu_414m),
+#         col = "grey90", border = NA)
 
-grid()
+# lines(avgs_414, pm_414m, lwd = 2)
+# lines(avgs_414, pu_414m, lwd = 2, col = "red")
+# lines(avgs_414, pl_414m, lwd = 2, col = "red")
 
-polygon(c(rev(avgs_414),avgs_414), c(rev(pl_414),pu_414),
-        col = "grey90", border = NA)
-
-lines(avgs_414, pm_414m, lwd = 2)
-lines(avgs_414, pu_414m, lwd = 2, col = "red")
-lines(avgs_414, pl_414m, lwd = 2, col = "red")
-
-#Visualization of mouse 414 for V2
+#Visualization of mouse 414 for V2 and V1
 
 
 predict(fit414_log_f, newdata = list(avg = c(-1, 0.05, 5)), type = "response")
@@ -362,33 +368,41 @@ pl_414f = probs_414f$fit - probs_414f$se.fit * 1.96 # 95% confidence interval
 
 plot(value_414_a$avg, 
      value_414_a$V2, 
-     pch = 16, 
-     cex = 1, 
-     ylab = "Interact with female", 
-     xlab = "Avg z.score")
+     pch = 10, 
+     cex = 0.5, 
+     ylab = "Interact with male | female", 
+     xlab = "Avg z.score",
+     main = "The probability of the Mouse414 interact result")
 
 grid()
 
+polygon(c(rev(avgs_414m),avgs_414m), c(rev(pl_414m),pu_414m),
+        col = "grey90", border = NA)
 polygon(c(rev(avgs_414f),avgs_414f), c(rev(pl_414f),pu_414f),
         col = "grey90", border = NA)
 
 lines(avgs_414, pm_414m, lwd = 2, col = "black")
-lines(avgs_414, pu_414m, lwd = 2, col = "blue")
-lines(avgs_414, pl_414m, lwd = 2, col = "blue")
+lines(avgs_414, pu_414m, lwd = 2, col = "lightblue")
+lines(avgs_414, pl_414m, lwd = 2, col = "lightblue")
+
 
 lines(avgs_414f, pm_414f, lwd = 2)
-lines(avgs_414f, pu_414f, lwd = 2, col = "red")
-lines(avgs_414f, pl_414f, lwd = 2, col = "red")
+lines(avgs_414f, pu_414f, lwd = 2, col = "pink")
+lines(avgs_414f, pl_414f, lwd = 2, col = "pink")
+
+legend("topright", legend = c("male","female"), col = c("lightblue","pink"),border = "grey",
+       lty = 2, lwd = 2, bty = "n",box.lty = 1, box.lwd = 1,cex = 1,text.font = 2 )
+
 
 #-------------------------------------------------------------------------------
 library(RcppRoll)
 
 #Sum every ten rows
-value_414_b <- value_414_a[,1:3]
-sum_rows_414 <- value_414_b %>% 
-  group_by(gr=gl(n()/10,10)) %>% 
-  mutate(Sum=sum(avg)) %>%
-  slice(10)
+value_414_b <- value_414_a[,c(1,2,4)]
+# sum_rows_414 <- value_414_b %>% 
+#   group_by(gr=gl(n()/10,10)) %>% 
+#   mutate(Sum=sum(avg)) %>%
+#   slice(10)
 
 #roll sum every ten rolls
 roll_sum_414 <- value_414_b %>%
@@ -428,24 +442,28 @@ pl_roll_414_f = probs_roll414_f$fit - probs_roll414_f$se.fit * 1.96 # 95% confid
 #plot
 plot(roll_sum_414[-c(1:10),]$roll_sum, 
      roll_sum_414[-c(1:10),]$V2, 
-     pch = 16, 
-     cex = 1, 
-     ylab = "Interact with female", 
-     xlab = "Roll_sum Avg z.score")
+     pch = 10, 
+     cex = 0.5, 
+     ylab = "Interact with male | female", 
+     xlab = "Roll_sum Avg z.score",
+     main = "The probability of the Mouse416 interact result(use sum z.score)")
 
 grid()
 
 polygon(c(rev(avgs_roll414_m),avgs_roll414_m), c(rev(pl_roll_414_m),pu_roll_414_m),
         col = "grey90", border = NA)
-
+polygon(c(rev(avgs_roll414_f),avgs_roll414_f), c(rev(pl_roll_414_f),pu_roll_414_f),
+        col = "grey90", border = NA)
 lines(avgs_roll414_m, pm_roll_414_m, lwd = 2)
-lines(avgs_roll414_m, pu_roll_414_m, lwd = 2, col = "blue")
-lines(avgs_roll414_m, pl_roll_414_m, lwd = 2, col = "blue")
+lines(avgs_roll414_m, pu_roll_414_m, lwd = 2, col = "lightblue")
+lines(avgs_roll414_m, pl_roll_414_m, lwd = 2, col = "lightblue")
 
 lines(avgs_roll414_f, pm_roll_414_f, lwd = 2)
-lines(avgs_roll414_f, pu_roll_414_f, lwd = 2, col = "red")
-lines(avgs_roll414_f, pl_roll_414_f, lwd = 2, col = "red")
+lines(avgs_roll414_f, pu_roll_414_f, lwd = 2, col = "pink")
+lines(avgs_roll414_f, pl_roll_414_f, lwd = 2, col = "pink")
 
+legend("topright", legend = c("male","female"), col = c("lightblue","pink"),border = "grey",
+       lty = 2, lwd = 2, bty = "n",box.lty = 1, box.lwd = 1,cex = 1,text.font = 2 )
 
 
 
