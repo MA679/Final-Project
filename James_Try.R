@@ -131,7 +131,7 @@ Mouse_409 <- ggplot(data = value_409)+
 #------------------------------------------------------------------------------------------------
 ##Mouse 414
 Mouse_414_behavior=readMat("Data/Opp_Sex/608102_414/Day_2/Trial_002_0/binned_behavior.mat")
-M414_b <- as.data.frame(t(Mouse_414_behavior$binned.behavior))
+M414_a <- as.data.frame(t(Mouse_414_behavior$binned.behavior))
 M414_b <- M414_b %>% mutate(Act =
                               case_when(V1 == 1 ~ "male", 
                                         V2 == 1 ~ "female",
@@ -302,4 +302,106 @@ lines(avgs, pl_f, lwd = 2, col = "red")
 abline(h=0.1, lty=2)
 abline(h=0.5, lty=2)
 abline(h=0.9, lty=2)
+
+#------------------------------------------------------------------------------
+#Visualize for mouse 414
+total414_a <- cbind(M414_a, M414_z)
+value_414_a <- total414[,c(1,2,38,39)]
+
+fit414_log_m <- glm(V1 ~ avg, data = value_414_a, family = 'binomial')
+fit414_log_f <- glm(V2 ~ avg, data = value_414_a, family = 'binomial')
+#View(value_414_a)
+
+#Visualization of mouse 414 for V1
+summary(fit414_log_m)
+summary(fit414_log_m)$coefficients
+exp(coefficients(fit414_log_m)[2])
+
+predict(fit414_log_m, newdata = list(avg = c(0.01, 1, 5)), type = "response")
+
+avgs_414 = seq(min(value_414_a$avg), max(value_414_a$avg), 0.05)
+probs_414 = predict(fit414_log_m, 
+                newdata = data.frame(avg = avgs_414), 
+                type = "response", 
+                se.fit = TRUE)
+
+pm_414m = probs_414$fit
+pu_414m = probs_414$fit + probs_414$se.fit * 1.96 # 95% confidence interval
+pl_414m = probs_414$fit - probs_414$se.fit * 1.96 # 95% confidence interval
+
+plot(value_414_a$avg, 
+     value_414_a$V1, 
+     pch = 16, 
+     cex = 1, 
+     ylab = "Interact with male", 
+     xlab = "Avg z.score")
+
+grid()
+
+polygon(c(rev(avgs_414),avgs_414), c(rev(pl_414),pu_414),
+        col = "grey90", border = NA)
+
+lines(avgs_414, pm_414m, lwd = 2)
+lines(avgs_414, pu_414m, lwd = 2, col = "red")
+lines(avgs_414, pl_414m, lwd = 2, col = "red")
+
+#Visualization of mouse 414 for V2
+
+
+predict(fit414_log_f, newdata = list(avg = c(-1, 0.05, 5)), type = "response")
+
+avgs_414f = seq(min(value_414_a$avg), max(value_414_a$avg), 0.05)
+probs_414f = predict(fit414_log_f, 
+                  newdata = data.frame(avg = avgs_414f), 
+                  type = "response", 
+                  se.fit = TRUE)
+
+pm_414f = probs_414f$fit
+pu_414f = probs_414f$fit + probs_414f$se.fit * 1.96 # 95% confidence interval
+pl_414f = probs_414f$fit - probs_414f$se.fit * 1.96 # 95% confidence interval
+
+plot(value_414_a$avg, 
+     value_414_a$V2, 
+     pch = 16, 
+     cex = 1, 
+     ylab = "Interact with female", 
+     xlab = "Avg z.score")
+
+grid()
+
+polygon(c(rev(avgs_414f),avgs_414f), c(rev(pl_414f),pu_414f),
+        col = "grey90", border = NA)
+
+lines(avgs_414, pm_414m, lwd = 2, col = "black")
+lines(avgs_414, pu_414m, lwd = 2, col = "blue")
+lines(avgs_414, pl_414m, lwd = 2, col = "blue")
+
+lines(avgs_414f, pm_414f, lwd = 2)
+lines(avgs_414f, pu_414f, lwd = 2, col = "red")
+lines(avgs_414f, pl_414f, lwd = 2, col = "red")
+
+abline(h=0.1, lty=2)
+abline(h=0.5, lty=2)
+abline(h=0.9, lty=2)
+
+#-------------------------------------------------------------------------------
+library(RcppRoll)
+
+
+#Sum every ten rows
+value_414_b <- value_414_a[,1:3]
+sum_rows_414 <- value_414_b %>% 
+  group_by(gr=gl(n()/10,10)) %>% 
+  mutate(Sum=sum(avg)) %>%
+  slice(10)
+
+#roll sum every ten rolls
+roll_sum_414 <- value_414_b %>%
+  mutate(roll_sum = roll_sum(avg, 10, align = "right", fill = NA))   
+
+#View(roll_sum_414)
+
+
+
+
 
